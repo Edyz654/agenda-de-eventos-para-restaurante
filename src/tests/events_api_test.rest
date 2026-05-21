@@ -1,0 +1,44 @@
+@baseURL = http://localhost:3000
+@id_do_evento = 3 
+
+### Listar todos os eventos
+GET {{baseURL}}/events
+Accept: application/json
+
+### Criar um novo evento
+POST {{baseURL}}/events
+Content-Type: application/json
+
+{
+"user_id": 1,
+"space_id": 1,
+"customer_id": 1,
+"name": "Evento de Teste",
+"date": "2023-10-10"
+}
+
+### Atualizar um evento existente (substitua @id_do_evento)
+PUT {{baseURL}}/events/{{id_do_evento}}
+Content-Type: application/json
+
+{
+"event_name": "Evento de Teste Atualizado",
+"date": "2023-10-11"
+}
+
+### Atualizar evento inexistente (erro esperado)
+PUT {{baseURL}}/events/9999
+Content-Type: application/json
+
+{
+"event_name": "Evento Inexistente",
+"date": "2023-10-12"
+}
+
+### Deletar um evento existente (substitua @id_do_evento)
+DELETE {{baseURL}}/events/{{id_do_evento}}
+Accept: application/json
+
+### Deletar um evento inexistente (erro esperado)
+DELETE {{baseURL}}/events/9999
+Accept: application/json

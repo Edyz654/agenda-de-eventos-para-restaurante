@@ -1,0 +1,66 @@
+@baseURL = http://localhost:3000
+@id_do_cliente = 3 
+
+### Listar todos os clientes
+GET {{baseURL}}/customers
+Accept: application/json
+
+### Criar um novo cliente
+POST {{baseURL}}/customers
+Content-Type: application/json
+
+{
+"name": "Marcos Cliente",
+"phone_number": "11999999999",
+"email": "marcos@cliente.com",
+"cpf": "12345678900",
+"address": "Rua Do Cliente, 123"
+}
+
+### Criar cliente com email inválido (erro esperado)
+POST {{baseURL}}/customers
+Content-Type: application/json
+
+{
+"name": "Teste Email Invalido",
+"email": "email_invalido",
+"phone_number": "11999999999"
+}
+
+### Criar cliente com email repetido (erro esperado)
+POST {{baseURL}}/customers
+Content-Type: application/json
+
+{
+"name": "Marcos Cliente 2",
+"email": "marcos@cliente.com",
+"phone_number": "11999999999"
+}
+
+### Atualizar um cliente existente (substitua @id_do_cliente)
+PUT {{baseURL}}/customers/{{id_do_cliente}}
+Content-Type: application/json
+
+{
+"name": "Marcos Cliente Atualizado",
+"email": "marcosatualizado@example.com",
+"phone_number": "11988888888"
+}
+
+### Atualizar cliente inexistente (erro esperado)
+PUT {{baseURL}}/customers/9999
+Content-Type: application/json
+
+{
+"name": "Cliente Inexistente",
+"email": "inexistente@example.com",
+"phone_number": "11977777777"
+}
+
+### Deletar um cliente existente (substitua @id_do_cliente)
+DELETE {{baseURL}}/customers/{{id_do_cliente}}
+Accept: application/json
+
+### Deletar um cliente inexistente (erro esperado)
+DELETE {{baseURL}}/customers/9999
+Accept: application/json
