@@ -25,8 +25,7 @@ class UserController {
     static async update(req, res) {
         try {
             const id = req.params.id; // Pega o ID da URL
-            await UserService.updateUser(id, req.body); // Chama o service para
-            atualizar
+            await UserService.updateUser(id, req.body); // Chama o service para atualizar
             res.json({ message: 'Usuário atualizado com sucesso.' });
         } catch (error) {
             res.status(400).json({ error: error.message }); // Retorna erro se não encontrar ou problema nos dados

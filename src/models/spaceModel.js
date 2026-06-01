@@ -3,40 +3,24 @@ const db = require('../config/database');
 
 class SpaceModel {
     // Busca todos os espaços
-    static async findAll() {
+    static async getAllSpaces() {
         const [rows] = await db.query('SELECT * FROM spaces');
         return rows;
     }
 
     // Busca um espaço pelo ID
-    static async findByID(id) {
+    static async getSpaceById(id) {
         const [rows] = await db.query('SELECT * FROM spaces WHERE id = ?', [id]);
         return rows[0];
     }
 
-    static async findByLocation(event_location) {
+    static async getSpaceByName(name) {
         const [rows] = await db.query(
-            'SELECT * FROM spaces WHERE event_location = ?',
-            [event_location]
+            'SELECT * FROM spaces WHERE name = ?',
+            [name]
         );
 
         return rows;
-    }
-
-
-    // Atualiza o local de um evento existente
-    static async update(id, space) {
-        const { event_location, setup_type } = space;
-
-        const [result] = await db.query('UPDATE spaces SET event_location = ?, setup_type = ? WHERE id = ? ', [event_location, setup_type, id]);
-        return result.affectedRows; // Retorna o número de linhas afetadas
-    }
-
-    // Atualiza o local e o espaço de um evento pelo ID alterando para 'pendente'
-    static async marcarPendente(id) {
-        const [result] = await db.query('UPDATE spaces SET event_location = ?, setup_type = ? WHERE id = ?', ['pendente', 'pendente', id]);
-
-        return result.affectedRows; // Retorna o número de linhas afetadas
     }
 }
 

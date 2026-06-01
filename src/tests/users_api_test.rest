@@ -1,5 +1,5 @@
 @baseURL = http://localhost:3000
-@id_do_usuario = 998
+@id_do_usuario = 3
 
 ### Listar todos os usuários
 GET {{baseURL}}/users
@@ -10,9 +10,9 @@ POST {{baseURL}}/users
 Content-Type: application/json
 
 {
-"name": "Marcos Silva",
-"email": "marcos@example.com",
-"phone_number": "11999999999"
+"name": "Novo Usuario",
+"email": "novo_usuario@example.com",
+"phone_number": "11999999988"
 }
 
 ### Criar usuário com email inválido (erro esperado)
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
 "name": "Marcos Silva",
-"email": "marcos@example.com",
+"email": "novo_usuario@example.com",
 "phone_number": "11999999999"
 }
 
@@ -41,8 +41,8 @@ Content-Type: application/json
 
 {
 "name": "Marcos Silva Atualizado",
-"email": "marcosatualizado@example.com",
-"phone_number": "11988888888"
+"email": "marcosatualizado2@example.com",
+"phone_number": "11977777"
 }
 
 ### Atualizar usuário inexistente (erro esperado)

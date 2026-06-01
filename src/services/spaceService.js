@@ -16,19 +16,20 @@ class SpaceService {
             throw new Error("O ID é obrigatório para busca."); // Valida se o ID foi fornecido
         }
 
-        return await SpaceModel.findById(id);
+        return await SpaceModel.getSpaceById(id);
     }
 
   
-    // Atualiza informações de um espaço existente
-    static async updateSpace(id, space) {
-        const updatedRows = await SpaceModel.update(id, space);
-        if (updatedRows === 0) {
-            throw new Error("Cliente não encontrado."); // Caso nenhum cliente tenha sido atualizado
+    // Busca espaços pelo nome
+    static async getSpaceByName(name) {
+        if (!name) {
+            throw new Error("O nome é obrigatório para busca."); // Valida se o nome foi fornecido
         }
-        return updatedRows;
-    }
+
+        return await SpaceModel.getSpaceByName(name);
+    }  
 }
+
 
 module.exports = SpaceService;
 // Exporta a classe para ser utilizada pelos controllers

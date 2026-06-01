@@ -9,36 +9,36 @@ class EventModel {
     }
 
     // Busca um evento pelo nome
-    static async findByName(name) {
+    static async findByName(event_name) {
         const [rows] = await db.query(
-            'SELECT * FROM events WHERE name LIKE ?',
-            [`%${name}%`]);
+            'SELECT * FROM events WHERE event_name LIKE ?',
+            [`%${event_name}%`]);
         return rows;
     }
 
     // Busca um evento pela data
-    static async findByDate(date) {
+    static async findByDate(event_date) {
         const [rows] = await db.query(
-            'SELECT * FROM events WHERE date = ?',
-            [date]);
+            'SELECT * FROM events WHERE event_date = ?',
+            [event_date]);
         return rows[0];
     }
 
     // Cria um novo evento
     static async create(event) {
-        const { user_id, space_id, customer_id, event_name, event_date } = event;
+        const { user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status, uploads_url } = event;
         const [result] = await db.query(
-            'INSERT INTO events (user_id, space_id, customer_id, name, date) VALUES (?, ?, ?, ?, ?)',
-            [user_id, space_id, customer_id, event_name, event_date]);
+            'INSERT INTO events (user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status, uploads_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+            [user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status, uploads_url]);
         return result.insertId; // Retorna o ID do evento criado
     }
 
     // Atualiza um evento existente
     static async update(id, event) {
-        const { user_id, space_id, customer_id, event_name, event_date } = event;
+        const { user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status, uploads_url} = event;
         const [result] = await db.query(
-            'UPDATE events SET user_id = ?, space_id = ?, customer_id = ?, name = ?, date = ? WHERE id = ? ',
-            [user_id, space_id, customer_id, event_name, event_date, id]);
+            'UPDATE events SET user_id = ?, space_id = ?, customer_id = ?, event_name = ?, event_description = ?, event_date = ?, event_start = ?, setup_type = ?, event_status = ?, uploads_url = ? WHERE id = ? ',
+            [user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status, uploads_url, id]);
         return result.affectedRows; // Retorna o número de linhas afetadas
     }
 

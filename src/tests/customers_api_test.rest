@@ -1,6 +1,5 @@
 @baseURL = http://localhost:3000
-@id_do_cliente = 3 
-
+@id_do_cliente = 4
 ### Listar todos os clientes
 GET {{baseURL}}/customers
 Accept: application/json
@@ -13,7 +12,7 @@ Content-Type: application/json
 "name": "Marcos Cliente",
 "phone_number": "11999999999",
 "email": "marcos@cliente.com",
-"cpf": "12345678900",
+"cpf": "12345678999",
 "address": "Rua Do Cliente, 123"
 }
 

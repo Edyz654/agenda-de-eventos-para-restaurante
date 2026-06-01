@@ -31,7 +31,7 @@ class CustomerService {
             throw new Error("O número de telefone é obrigatório."); // Valida se o número de telefone foi fornecido
         }
 
-        if (!email && !validateEmail(email)) {
+        if (email && !validateEmail(email)) {
             throw new Error("Formato de email inválido."); // Valida o formato do e-mail
         }
 

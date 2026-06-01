@@ -1,0 +1,15 @@
+@baseURL = http://localhost:3000
+@id_do_espaco = 1
+@nome_do_espaco = cave
+
+### Listar todos os espaços
+GET {{baseURL}}/spaces
+Accept: application/json
+
+### Buscar espaço por ID
+GET {{baseURL}}/spaces/id/{{id_do_espaco}}
+Accept: application/json
+
+### Buscar espaço por nome
+GET {{baseURL}}/spaces/name/{{nome_do_espaco}}
+Accept: application/json

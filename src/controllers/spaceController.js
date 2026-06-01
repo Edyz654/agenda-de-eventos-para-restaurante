@@ -14,16 +14,16 @@ class SpaceController {
 
     static async getByID(req, res) {
         try {
-            const spaces = await SpaceService.getSpacesByID(req.params.id); // Chama o service para buscar espaços pelo ID
+            const spaces = await SpaceService.getSpaceById(req.params.id); // Chama o service para buscar espaços pelo ID
             res.json(spaces); // Retorna a lista em formato JSON
         } catch (error) {
             res.status(400).json({ error: error.message }); // Em caso de erro, retorna status 400
         }
     }
 
-    static async getByLocation(req, res) {
+    static async getByName(req, res) {
         try {
-            const spaces = await SpaceService.getSpacesByLocation(req.params.event_location); // Chama o service para buscar espaços pelo local do evento
+            const spaces = await SpaceService.getSpaceByName(req.params.name); // Chama o service para buscar espaços pelo nome
             res.json(spaces); // Retorna a lista em formato JSON
         } catch (error) {
             res.status(400).json({ error: error.message }); // Em caso de erro, retorna status 400

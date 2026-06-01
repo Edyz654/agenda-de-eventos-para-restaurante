@@ -11,8 +11,8 @@ const router = express.Router();
 router.get('/', SpaceController.getAll);
 // Define a rota para buscar um espaço pelo ID
 router.get('/id/:id', SpaceController.getByID);
-// Define a rota para buscar um espaço pela localização
-router.get('/location/:event_location', SpaceController.getByLocation);
+// Define a rota para buscar um espaço pelo nome
+router.get('/name/:name', SpaceController.getByName);
 // Define a rota para atualizar um espaço pelo ID
 router.put('/:id', SpaceController.update);
 
