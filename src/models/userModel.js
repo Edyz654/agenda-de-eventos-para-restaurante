@@ -4,21 +4,28 @@ const db = require('../config/database');
 class UserModel {
     // Busca todos os usuários
     static async findAll() {
-        const [rows] = await db.query('SELECT * FROM users');
+        const [rows] = await db.query('SELECT id, name, email, phone_number, role, created_at FROM users');
         return rows;
     }
 
     // Busca um usuário pelo email
     static async findByEmail(email) {
-        const [rows] = await db.query('SELECT * FROM users WHERE email = ?',
+        const [rows] = await db.query('SELECT id, name, email, phone_number, role, created_at FROM users WHERE email = ?',
+            [email]);
+        return rows[0];
+    }
+
+    static async findByEmailWithPassword(email) {
+        const [rows] = await db.query(
+            'SELECT id, name, email, password, role FROM users WHERE email = ?',
             [email]);
         return rows[0];
     }
 
     // Cria um novo usuário
     static async create(user) {
-        const { name, email, phone_number } = user;
-        const [result] = await db.query('INSERT INTO users (name, email, phone_number) VALUES (?, ?, ?)', [name, email, phone_number]);
+        const { name, email, phone_number, password, role } = user;
+        const [result] = await db.query('INSERT INTO users (name, email, phone_number, password, role) VALUES (?, ?, ?, ?, ?)', [name, email, phone_number, password, role]);
         return result.insertId; // Retorna o ID do usuário criado
     }
 

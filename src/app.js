@@ -4,6 +4,9 @@ const express = require('express');
 const cors = require('cors');
 // Importa o middleware que permite o compartilhamento de recursos entre diferentes origens(Cross - Origin Resource Sharing)
 
+const authRoutes = require('./routes/authRoutes');
+// Importa as rotas relacionadas à autenticação (login, registro, etc.)
+
 const helmet = require('helmet');
 // Importa o middleware de segurança que adiciona cabeçalhos HTTP para proteger contra ataques comuns
 
@@ -34,6 +37,9 @@ app.use(helmet());
 
 app.use(express.json());
 // Permite que o servidor interprete requisições com corpo em formato JSON
+
+app.use('/auth', authRoutes);
+// Define que todas as requisições iniciadas com /auth serão encaminhadas para o arquivo authRoutes
 
 // Rotas da aplicação
 app.use('/users', userRoutes);

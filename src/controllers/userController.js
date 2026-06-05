@@ -14,8 +14,8 @@ class UserController {
     // Método para criar um novo usuário
     static async create(req, res) {
         try {
-            const id = await UserService.createUser(req.body); // Chama o service para criar usuário
-            res.status(201).json({ message: 'Usuário criado com sucesso.', id }); // Retorna status 201(criado) e o ID
+            const result = await UserService.createUser(req.body); // Chama o service para criar usuário
+            res.status(201).json(result); // Retorna status 201 (criado) e os dados do novo usuário
         } catch (error) {
             res.status(400).json({ error: error.message }); // Em caso de erro de validação, retorna status 400
         }

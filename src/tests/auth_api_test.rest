@@ -1,0 +1,29 @@
+@baseURL = http://localhost:3000
+@id_do_usuario = 3
+
+### Cadastro de novo usuário
+POST {{baseURL}}/auth/register
+Content-Type: application/json 
+
+{
+"name": "Novo Usuario",
+"email": "novo_usuario@example.com",
+"phone_number": "11999999988",
+"password": "nova_senha",
+"role": "user"
+}
+
+### Login do novo usuário (pegar o token gerado abaixo)
+POST {{baseURL}}/auth/login
+Content-Type: application/json
+
+{
+"email": "novo_usuario@example.com",
+"password": "nova_senha"
+}
+
+### Login do usuário comum (usuário já existente no banco)
+POST {{baseURL}}/auth/login
+Content-Type: application/json
+
+
