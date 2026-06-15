@@ -15,6 +15,12 @@ A documentacao Swagger fica disponivel em:
 http://localhost:3000/api-docs
 ```
 
+O frontend para testar a API fica em:
+
+```txt
+http://localhost:3000
+```
+
 A especificacao OpenAPI em JSON fica em:
 
 ```txt

@@ -1,6 +1,9 @@
 const express = require('express');
 // Importa o framework Express, utilizado para criar o servidor HTTP e gerenciar rotas
 
+const path = require('path');
+// Importa utilitario para resolver caminhos de arquivos estaticos
+
 const cors = require('cors');
 // Importa o middleware que permite o compartilhamento de recursos entre diferentes origens(Cross - Origin Resource Sharing)
 
@@ -54,6 +57,9 @@ app.use(helmet());
 
 app.use(express.json());
 // Permite que o servidor interprete requisições com corpo em formato JSON
+
+app.use(express.static(path.join(__dirname, 'public')));
+// Serve o frontend estatico da aplicacao
 
 app.use('/auth', authRoutes);
 // Define que todas as requisições iniciadas com /auth serão encaminhadas para o arquivo authRoutes

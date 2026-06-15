@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Agenda de Eventos</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header class="topbar">
+        <div>
+            <p class="eyebrow">Restaurante</p>
+            <h1>Agenda de Eventos</h1>
+        </div>
+        <div class="topbar-actions">
+            <a class="link-button" href="/api-docs" target="_blank" rel="noreferrer">Swagger</a>
+            <button id="logoutButton" class="ghost-button" type="button">Sair</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar">
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>Acesso</h2>
+                    <span id="authStatus" class="status-pill muted">Sem token</span>
+                </div>
+
+                <form id="loginForm" class="stack">
+                    <label>
+                        Email
+                        <input name="email" type="email" autocomplete="email" placeholder="admin@example.com" required>
+                    </label>
+                    <label>
+                        Senha
+                        <input name="password" type="password" autocomplete="current-password" placeholder="senha" required>
+                    </label>
+                    <button type="submit">Entrar</button>
+                </form>
+
+                <details>
+                    <summary>Cadastrar usuario</summary>
+                    <form id="registerForm" class="stack compact">
+                        <label>
+                            Nome
+                            <input name="name" type="text" required>
+                        </label>
+                        <label>
+                            Email
+                            <input name="email" type="email" required>
+                        </label>
+                        <label>
+                            Telefone
+                            <input name="phone_number" type="text">
+                        </label>
+                        <label>
+                            Senha
+                            <input name="password" type="password" required>
+                        </label>
+                        <button type="submit" class="secondary-button">Cadastrar</button>
+                    </form>
+                </details>
+            </section>
+
+            <section class="panel">
+                <div class="panel-header">
+                    <h2>Ambientes</h2>
+                    <button id="refreshSpaces" class="icon-button" type="button" title="Atualizar ambientes">↻</button>
+                </div>
+                <div id="spacesList" class="list compact-list"></div>
+            </section>
+        </aside>
+
+        <section class="content">
+            <nav class="tabs" aria-label="Secoes">
+                <button class="tab-button active" type="button" data-tab="events">Eventos</button>
+                <button class="tab-button" type="button" data-tab="customers">Clientes</button>
+                <button class="tab-button" type="button" data-tab="users">Usuarios</button>
+            </nav>
+
+            <section id="eventsTab" class="tab-panel active">
+                <div class="split">
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h2>Novo evento</h2>
+                            <button id="clearEventForm" class="ghost-button small" type="button">Limpar</button>
+                        </div>
+                        <form id="eventForm" class="grid-form">
+                            <input name="id" type="hidden">
+                            <label>
+                                Nome do evento
+                                <input name="event_name" type="text" required>
+                            </label>
+                            <label>
+                                Cliente
+                                <select name="customer_id" required></select>
+                            </label>
+                            <label>
+                                Ambiente
+                                <select name="space_id" required></select>
+                            </label>
+                            <label>
+                                Responsavel
+                                <select name="user_id" required></select>
+                            </label>
+                            <label>
+                                Data
+                                <input name="event_date" type="date" required>
+                            </label>
+                            <label>
+                                Inicio
+                                <input name="event_time" type="time" required>
+                            </label>
+                            <label>
+                                Lugares
+                                <input name="seats_count" type="number" min="1" step="1" required>
+                            </label>
+                            <label>
+                                Tipo
+                                <select name="setup_type">
+                                    <option value="pendente">pendente</option>
+                                    <option value="buffet">buffet</option>
+                                    <option value="coquetel">coquetel</option>
+                                    <option value="a_la_carte">a_la_carte</option>
+                                    <option value="reuniao">reuniao</option>
+                                    <option value="auditorio">auditorio</option>
+                                </select>
+                            </label>
+                            <label>
+                                Status
+                                <select name="event_status">
+                                    <option value="nao_confirmado">nao_confirmado</option>
+                                    <option value="confirmado">confirmado</option>
+                                </select>
+                            </label>
+                            <label class="span-2">
+                                Descricao
+                                <textarea name="event_description" rows="3"></textarea>
+                            </label>
+                            <label class="span-2">
+                                URL de upload
+                                <input name="uploads_url" type="url" placeholder="https://...">
+                            </label>
+                            <button type="submit" class="span-2">Salvar evento</button>
+                        </form>
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h2>Eventos</h2>
+                            <div class="inline-actions">
+                                <input id="eventSearch" class="search-input" type="search" placeholder="Buscar por nome">
+                                <button id="refreshEvents" class="icon-button" type="button" title="Atualizar eventos">↻</button>
+                            </div>
+                        </div>
+                        <div id="eventsList" class="list"></div>
+                    </section>
+                </div>
+            </section>
+
+            <section id="customersTab" class="tab-panel">
+                <div class="split">
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h2>Novo cliente</h2>
+                            <button id="clearCustomerForm" class="ghost-button small" type="button">Limpar</button>
+                        </div>
+                        <form id="customerForm" class="grid-form">
+                            <input name="id" type="hidden">
+                            <label>
+                                Nome
+                                <input name="name" type="text" required>
+                            </label>
+                            <label>
+                                Telefone
+                                <input name="phone_number" type="text" required>
+                            </label>
+                            <label>
+                                Email
+                                <input name="email" type="email">
+                            </label>
+                            <label>
+                                CPF
+                                <input name="cpf" type="text">
+                            </label>
+                            <label class="span-2">
+                                Endereco
+                                <input name="address" type="text">
+                            </label>
+                            <button type="submit" class="span-2">Salvar cliente</button>
+                        </form>
+                    </section>
+
+                    <section class="panel">
+                        <div class="panel-header">
+                            <h2>Clientes</h2>
+                            <div class="inline-actions">
+                                <input id="customerSearch" class="search-input" type="search" placeholder="Buscar por nome">
+                                <button id="refreshCustomers" class="icon-button" type="button" title="Atualizar clientes">↻</button>
+                            </div>
+                        </div>
+                        <div id="customersList" class="list"></div>
+                    </section>
+                </div>
+            </section>
+
+            <section id="usersTab" class="tab-panel">
+                <section class="panel">
+                    <div class="panel-header">
+                        <h2>Usuarios</h2>
+                        <button id="refreshUsers" class="icon-button" type="button" title="Atualizar usuarios">↻</button>
+                    </div>
+                    <div id="usersList" class="list"></div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="/app.js"></script>
+</body>
+</html>
