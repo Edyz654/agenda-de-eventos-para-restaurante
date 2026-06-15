@@ -42,6 +42,17 @@ class EventController {
         }
     }
     
+    // Metodo para atualizar apenas o status do evento
+    static async updateStatus(req, res) {
+        try {
+            const id = req.params.id;
+            await EventService.updateEventStatus(id, req.body.event_status);
+            res.json({ message: 'Status do evento atualizado com sucesso.' });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
     // Método para deletar um evento pelo ID
     static async delete(req, res) {
         try {

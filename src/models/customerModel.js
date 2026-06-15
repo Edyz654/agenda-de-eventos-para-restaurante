@@ -16,6 +16,14 @@ class CustomerModel {
         return rows;
     }
 
+    // Busca um cliente pelo ID
+    static async findById(id) {
+        const [rows] = await db.query(
+            'SELECT * FROM customers WHERE id = ?',
+            [id]);
+        return rows[0];
+    }
+
     // Busca um cliente pelo e-mail
     static async findByEmail(email) {
         const [rows] = await db.query(

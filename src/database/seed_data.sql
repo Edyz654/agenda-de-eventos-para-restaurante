@@ -15,6 +15,6 @@ INSERT INTO spaces (name) VALUES
 ('jardim');
 
 INSERT INTO events 
-(user_id, space_id, customer_id, event_name, event_description, event_date, event_start, setup_type, event_status) VALUES 
-(2, 3, 1,'Congresso de medicina do trabalho', 'Palestras e coffee breaks', '2026-10-14', '2026-10-14 10:00:00', 'buffet', 'confirmado'),
-(1, 5, 2,'Encontro de motociclistas', 'Confraternização', '2026-08-02', '2026-08-02 20:00:00', 'buffet', 'confirmado');
+(user_id, space_id, customer_id, event_name, event_description, event_date, event_start, seats_count, setup_type, event_status) VALUES 
+(2, 3, 1,'Congresso de medicina do trabalho', 'Palestras e coffee breaks', '2026-10-14', '2026-10-14 10:00:00', 80, 'buffet', 'confirmado'),
+(1, 5, 2,'Encontro de motociclistas', 'Confraternização', '2026-08-02', '2026-08-02 20:00:00', 45, 'buffet', 'confirmado');

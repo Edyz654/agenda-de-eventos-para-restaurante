@@ -14,6 +14,7 @@ router.get('/', authenticateToken, EventController.getAll);
 router.get('/search', authenticateToken, EventController.getByName);
 
 router.post('/', authenticateToken, authorizeRole('admin'), EventController.create);
+router.patch('/:id/status', authenticateToken, authorizeRole('admin'), EventController.updateStatus);
 router.put('/:id', authenticateToken, authorizeRole('admin'), EventController.update);
 router.delete('/:id', authenticateToken, authorizeRole('admin'), EventController.delete);
 

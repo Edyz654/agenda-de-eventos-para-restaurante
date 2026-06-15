@@ -4,6 +4,12 @@ const express = require('express');
 const cors = require('cors');
 // Importa o middleware que permite o compartilhamento de recursos entre diferentes origens(Cross - Origin Resource Sharing)
 
+const swaggerUi = require('swagger-ui-express');
+// Importa o Swagger UI para documentar e testar a API
+
+const swaggerDocument = require('./docs/swagger');
+// Importa a especificacao OpenAPI da API
+
 const authRoutes = require('./routes/authRoutes');
 // Importa as rotas relacionadas à autenticação (login, registro, etc.)
 
@@ -34,6 +40,14 @@ const app = express();
 // Middlewares globais
 app.use(cors());
 // Habilita o CORS em todas as rotas da aplicação
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+// Disponibiliza a interface do Swagger UI para testar a API
+
+app.get('/api-docs.json', (req, res) => {
+    res.json(swaggerDocument);
+});
+// Disponibiliza a especificacao OpenAPI em JSON
 
 app.use(helmet());
 // Adiciona proteção automática contra vulnerabilidades HTTP

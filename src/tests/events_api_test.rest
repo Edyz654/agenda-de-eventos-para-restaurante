@@ -1,24 +1,29 @@
 @baseURL = http://localhost:3000
 @id_do_evento = 5
 @nome_do_evento = medi
+@token_admin =
 
 ### Listar todos os eventos
 GET {{baseURL}}/events
 Accept: application/json
+Authorization: Bearer {{token_admin}}
 
 ### Buscar eventos por nome
 GET {{baseURL}}/events/search?name={{nome_do_evento}}
 Accept: application/json
+Authorization: Bearer {{token_admin}}
 
 
 ### Buscar eventos pelo nome exato/parcial (substitua {{nome_do_evento}} pelo nome do evento que deseja buscar)
 GET {{baseURL}}/events/search?name={{nome_do_evento}}
 Accept: application/json
+Authorization: Bearer {{token_admin}}
 
 
 ### Criar um novo evento
 POST {{baseURL}}/events
 Content-Type: application/json
+Authorization: Bearer {{token_admin}}
 
 {
   "user_id": 1,
@@ -28,6 +33,7 @@ Content-Type: application/json
   "event_description": "Reserva para jantar corporativo",
   "event_date": "2026-06-10",
   "event_start": "2026-06-10 19:00:00",
+  "seats_count": 30,
   "setup_type": "buffet",
   "event_status": "nao_confirmado"
 }
@@ -35,6 +41,7 @@ Content-Type: application/json
 ### Atualizar um evento existente (substitua @id_do_evento)
 PUT {{baseURL}}/events/{{id_do_evento}}
 Content-Type: application/json
+Authorization: Bearer {{token_admin}}
 
 {
 "user_id": 1,
@@ -42,23 +49,45 @@ Content-Type: application/json
 "customer_id": 1,
 "event_name": "Evento de Teste Atualizado",
 "event_date": "2023-10-11",
+"event_start": "2023-10-11 19:00:00",
+"seats_count": 35,
 "setup_type": "buffet",
 "event_status": "confirmado"
+}
+
+### Atualizar apenas o status do evento
+PATCH {{baseURL}}/events/{{id_do_evento}}/status
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "event_status": "confirmado"
 }
 
 ### Atualizar evento inexistente (erro esperado)
 PUT {{baseURL}}/events/9999
 Content-Type: application/json
+Authorization: Bearer {{token_admin}}
 
 {
-"event_name": "Evento Inexistente",
-"event_date": "2023-10-12"
+  "user_id": 1,
+  "space_id": 1,
+  "customer_id": 1,
+  "event_name": "Evento Inexistente",
+  "event_description": "Teste de atualizacao inexistente",
+  "event_date": "2023-10-12",
+  "event_start": "2023-10-12 19:00:00",
+  "seats_count": 10,
+  "setup_type": "buffet",
+  "event_status": "nao_confirmado"
 }
 
 ### Deletar um evento existente (substitua @id_do_evento)
 DELETE {{baseURL}}/events/{{id_do_evento}}
 Accept: application/json
+Authorization: Bearer {{token_admin}}
 
 ### Deletar um evento inexistente (erro esperado)
 DELETE {{baseURL}}/events/9999
 Accept: application/json
+Authorization: Bearer {{token_admin}}

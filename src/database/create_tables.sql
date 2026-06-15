@@ -53,6 +53,7 @@ CREATE TABLE `events` (
   `event_description` text,
   `event_date` date NOT NULL,
   `event_start` timestamp NULL DEFAULT NULL,
+  `seats_count` int NOT NULL,
   `setup_type` enum('buffet','coquetel','a_la_carte','reuniao','auditorio','pendente') NOT NULL DEFAULT 'pendente',
   `event_status` enum('confirmado','nao_confirmado') NOT NULL DEFAULT 'nao_confirmado',
   `uploads_url` varchar(250) DEFAULT NULL,

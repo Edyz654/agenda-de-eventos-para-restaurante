@@ -15,6 +15,14 @@ class UserModel {
         return rows[0];
     }
 
+    // Busca um usuÃ¡rio pelo ID
+    static async findById(id) {
+        const [rows] = await db.query(
+            'SELECT id, name, email, phone_number, role, created_at FROM users WHERE id = ?',
+            [id]);
+        return rows[0];
+    }
+
     static async findByEmailWithPassword(email) {
         const [rows] = await db.query(
             'SELECT id, name, email, password, role FROM users WHERE email = ?',
