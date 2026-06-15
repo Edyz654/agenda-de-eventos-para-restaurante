@@ -25,6 +25,9 @@ const spaceRoutes = require('./routes/spaceRoutes');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 // Importa o middleware para tratamento centralizado de erros
 
+const authMiddleware = require('./middlewares/authMiddleware');
+// Importa os middlewares de autenticação e autorização para proteger rotas específicas
+
 const app = express();
 // Cria uma instância do aplicativo Express
 

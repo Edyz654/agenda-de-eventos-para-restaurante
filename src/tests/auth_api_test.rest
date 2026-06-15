@@ -1,5 +1,6 @@
 @baseURL = http://localhost:3000
-@id_do_usuario = 3
+@token_novo =
+@token_admin =
 
 ### Cadastro de novo usuário
 POST {{baseURL}}/auth/register
@@ -9,9 +10,9 @@ Content-Type: application/json
 "name": "Novo Usuario",
 "email": "novo_usuario@example.com",
 "phone_number": "11999999988",
-"password": "nova_senha",
-"role": "user"
+"password": "nova_senha"
 }
+
 
 ### Login do novo usuário (pegar o token gerado abaixo)
 POST {{baseURL}}/auth/login
@@ -22,8 +23,60 @@ Content-Type: application/json
 "password": "nova_senha"
 }
 
-### Login do usuário comum (usuário já existente no banco)
+
+### Tentativa de login com senha incorreta - esperado: 401
 POST {{baseURL}}/auth/login
 Content-Type: application/json
 
+{
+"email": "novo_usuario@example.com",
+"password": "senha_errada"
+}
+
+
+### Acesso sem token - esperado: 401 se a rota estiver protegida
+GET {{baseURL}}/events
+Accept: application/json
+
+
+### Acesso com token valido - esperado: 200 se usuario comum puder listar eventos
+GET {{baseURL}}/events
+Accept: application/json
+Authorization: Bearer {{token_novo}}
+
+
+### Criar evento com usuario comum - esperado: 403 se apenas admin puder criar
+POST {{baseURL}}/events
+Content-Type: application/json
+Authorization: Bearer {{token_novo}}
+
+{
+  "user_id": 1,
+  "space_id": 1,
+  "customer_id": 1,
+  "event_name": "Evento Usuario Comum",
+  "event_description": "Teste de autorizacao",
+  "event_date": "2026-07-02",
+  "event_start": "2026-07-02 10:00:00",
+  "setup_type": "buffet",
+  "event_status": "nao_confirmado"
+}
+
+
+### Criar evento com admin - esperado: 201 se admin puder criar
+POST {{baseURL}}/events
+Content-Type: application/json
+Authorization: Bearer {{token_admin}}
+
+{
+  "user_id": 1,
+  "space_id": 1,
+  "customer_id": 1,
+  "event_name": "Evento Admin",
+  "event_description": "Criado por admin",
+  "event_date": "2026-07-02",
+  "event_start": "2026-07-02 10:00:00",
+  "setup_type": "buffet",
+  "event_status": "confirmado"
+}
 
