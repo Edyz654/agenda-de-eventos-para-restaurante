@@ -141,8 +141,8 @@ const swaggerDocument = {
                     customer_id: { type: 'integer', example: 1 },
                     event_name: { type: 'string', example: 'Evento de Teste' },
                     event_description: { type: 'string', nullable: true, example: 'Reserva para jantar corporativo' },
-                    event_date: { type: 'string', format: 'date', example: '2026-06-10' },
-                    event_start: { type: 'string', example: '2026-06-10 19:00:00' },
+                    event_date: { type: 'string', pattern: '^\\d{2}/\\d{2}/\\d{2}$', example: '10/06/26' },
+                    event_start: { type: 'string', example: '10/06/26 19:00:00' },
                     seats_count: { type: 'integer', minimum: 1, example: 30 },
                     setup_type: {
                         type: 'string',

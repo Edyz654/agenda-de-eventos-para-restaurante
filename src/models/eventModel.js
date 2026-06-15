@@ -1,17 +1,34 @@
 const db = require('../config/database');
 // Importa a conexao pool com o banco de dados
 
+const EVENT_SELECT_FIELDS = `
+    id,
+    user_id,
+    space_id,
+    customer_id,
+    event_name,
+    event_description,
+    DATE_FORMAT(event_date, '%d/%m/%y') AS event_date,
+    event_start,
+    seats_count,
+    setup_type,
+    event_status,
+    uploads_url,
+    created_at,
+    updated_at
+`;
+
 class EventModel {
     // Busca todos os eventos
     static async getAllEvents() {
-        const [rows] = await db.query('SELECT * FROM events');
+        const [rows] = await db.query(`SELECT ${EVENT_SELECT_FIELDS} FROM events`);
         return rows;
     }
 
     // Busca um evento pelo nome
     static async findByName(event_name) {
         const [rows] = await db.query(
-            'SELECT * FROM events WHERE event_name LIKE ?',
+            `SELECT ${EVENT_SELECT_FIELDS} FROM events WHERE event_name LIKE ?`,
             [`%${event_name}%`]);
         return rows;
     }
@@ -19,7 +36,7 @@ class EventModel {
     // Busca um evento pela data
     static async findByDate(event_date) {
         const [rows] = await db.query(
-            'SELECT * FROM events WHERE event_date = ?',
+            `SELECT ${EVENT_SELECT_FIELDS} FROM events WHERE event_date = ?`,
             [event_date]);
         return rows[0];
     }
@@ -27,7 +44,7 @@ class EventModel {
     // Busca um evento pelo ID
     static async findById(id) {
         const [rows] = await db.query(
-            'SELECT * FROM events WHERE id = ?',
+            `SELECT ${EVENT_SELECT_FIELDS} FROM events WHERE id = ?`,
             [id]);
         return rows[0];
     }

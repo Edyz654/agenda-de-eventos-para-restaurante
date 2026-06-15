@@ -56,8 +56,8 @@ Payload para criar ou atualizar um evento:
   "customer_id": 1,
   "event_name": "Evento de Teste",
   "event_description": "Reserva para jantar corporativo",
-  "event_date": "2026-06-10",
-  "event_start": "2026-06-10 19:00:00",
+  "event_date": "10/06/26",
+  "event_start": "10/06/26 19:00:00",
   "seats_count": 30,
   "setup_type": "buffet",
   "event_status": "nao_confirmado"
@@ -75,6 +75,8 @@ Status permitidos em `event_status`:
 ```txt
 confirmado, nao_confirmado
 ```
+
+A API recebe e retorna `event_date` no formato `dd/mm/yy`. No MySQL, a coluna continua sendo `DATE`, entao o backend converte automaticamente para o formato interno `YYYY-MM-DD` antes de salvar.
 
 Para confirmar ou negar um evento sem alterar o restante dos dados:
 

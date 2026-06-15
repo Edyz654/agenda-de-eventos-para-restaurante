@@ -192,12 +192,34 @@ function statusClass(status) {
 
 function formatDate(dateValue) {
     if (!dateValue) return '';
-    return String(dateValue).slice(0, 10);
+    const value = String(dateValue).slice(0, 10);
+    if (/^\d{2}\/\d{2}\/\d{2}$/.test(value)) return value;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        const [year, month, day] = value.split('-');
+        return `${day}/${month}/${year.slice(2)}`;
+    }
+    return value;
 }
 
 function formatEventStart(eventStart) {
     if (!eventStart) return '';
     return String(eventStart).replace('T', ' ').slice(0, 16);
+}
+
+function dateToInputValue(dateValue) {
+    if (!dateValue) return '';
+    const value = String(dateValue).slice(0, 10);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+    if (/^\d{2}\/\d{2}\/\d{2}$/.test(value)) {
+        const [day, month, year] = value.split('/');
+        return `20${year}-${month}-${day}`;
+    }
+    return '';
+}
+
+function inputDateToBrDate(dateValue) {
+    const [year, month, day] = dateValue.split('-');
+    return `${day}/${month}/${year.slice(2)}`;
 }
 
 function findName(items, id) {
@@ -323,8 +345,8 @@ function eventPayload(form) {
         customer_id: Number(data.customer_id),
         event_name: data.event_name,
         event_description: data.event_description || null,
-        event_date: data.event_date,
-        event_start: `${data.event_date} ${data.event_time}:00`,
+        event_date: inputDateToBrDate(data.event_date),
+        event_start: `${inputDateToBrDate(data.event_date)} ${data.event_time}:00`,
         seats_count: Number(data.seats_count),
         setup_type: setupTypes.includes(data.setup_type) ? data.setup_type : 'pendente',
         event_status: eventStatuses.includes(data.event_status) ? data.event_status : 'nao_confirmado',
@@ -349,7 +371,7 @@ function editEvent(id) {
     const event = state.events.find((item) => Number(item.id) === Number(id));
     if (!event) return;
 
-    const eventDate = formatDate(event.event_date);
+    const eventDate = dateToInputValue(event.event_date);
     const eventStart = formatEventStart(event.event_start);
     const time = eventStart.includes(' ') ? eventStart.split(' ')[1] : '';
 

@@ -23,17 +23,38 @@ class EventService {
     }
 
     static validateEventDate(event_date) {
-        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-        if (!dateRegex.test(event_date)) {
-            throw new Error("A data do evento deve estar no formato YYYY-MM-DD.");
+        const mysqlDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        const brDateRegex = /^\d{2}\/\d{2}\/\d{2}$/;
+        if (!mysqlDateRegex.test(event_date) && !brDateRegex.test(event_date)) {
+            throw new Error("A data do evento deve estar no formato DD/MM/YY.");
         }
     }
 
     static validateEventStart(event_start) {
-        const eventStartDate = new Date(event_start);
-        if (Number.isNaN(eventStartDate.getTime())) {
+        const mysqlDateTimeRegex = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/;
+        const brDateTimeRegex = /^\d{2}\/\d{2}\/\d{2} \d{2}:\d{2}(:\d{2})?$/;
+        if (!mysqlDateTimeRegex.test(event_start) && !brDateTimeRegex.test(event_start)) {
             throw new Error("O inicio do evento deve conter uma data e hora validas.");
         }
+    }
+
+    static normalizeEventDate(event_date) {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(event_date)) {
+            return event_date;
+        }
+
+        const [day, month, year] = event_date.split('/');
+        return `20${year}-${month}-${day}`;
+    }
+
+    static normalizeEventStart(event_start) {
+        if (/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}(:\d{2})?$/.test(event_start)) {
+            return event_start.length === 16 ? `${event_start}:00` : event_start;
+        }
+
+        const [date, time] = event_start.split(' ');
+        const mysqlDate = EventService.normalizeEventDate(date);
+        return `${mysqlDate} ${time.length === 5 ? `${time}:00` : time}`;
     }
 
     static validateSeatsCount(seats_count) {
@@ -127,6 +148,8 @@ class EventService {
 
         const eventToCreate = {
             ...event,
+            event_date: EventService.normalizeEventDate(event.event_date),
+            event_start: EventService.normalizeEventStart(event.event_start),
             seats_count: Number(event.seats_count),
             setup_type: event.setup_type || 'pendente',
             event_status: event.event_status || 'nao_confirmado'
@@ -141,6 +164,8 @@ class EventService {
 
         const eventToUpdate = {
             ...event,
+            event_date: EventService.normalizeEventDate(event.event_date),
+            event_start: EventService.normalizeEventStart(event.event_start),
             seats_count: Number(event.seats_count),
             setup_type: event.setup_type || 'pendente',
             event_status: event.event_status || 'nao_confirmado'
