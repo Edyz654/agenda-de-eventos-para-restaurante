@@ -1,5 +1,5 @@
 @baseURL = http://localhost:3000
-@id_do_usuario = 3
+@id_do_usuario = 5
 
 ### Listar todos os usuários
 GET {{baseURL}}/users
@@ -12,7 +12,9 @@ Content-Type: application/json
 {
 "name": "Novo Usuario",
 "email": "novo_usuario@example.com",
-"phone_number": "11999999988"
+"phone_number": "11999999988",
+"password": "nova_senha",
+"role": "user"
 }
 
 ### Criar usuário com email inválido (erro esperado)
@@ -22,7 +24,9 @@ Content-Type: application/json
 {
 "name": "Teste Email Invalido",
 "email": "email_invalido",
-"phone_number": "11999999999"
+"phone_number": "11999999999",
+"password": "senha_teste",
+"role": "user"
 }
 
 ### Criar usuário com email repetido (erro esperado)
@@ -32,7 +36,9 @@ Content-Type: application/json
 {
 "name": "Marcos Silva",
 "email": "novo_usuario@example.com",
-"phone_number": "11999999999"
+"phone_number": "11999999999",
+"password": "senha_teste",
+"role": "user"
 }
 
 ### Atualizar um usuário existente (substitua @id_do_usuario)

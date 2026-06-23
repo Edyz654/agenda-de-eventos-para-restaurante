@@ -39,7 +39,7 @@ CREATE TABLE `users` (
   `role` enum('admin','user') NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- agenda_de_eventos_db.events definição
@@ -52,8 +52,8 @@ CREATE TABLE `events` (
   `event_name` varchar(100) NOT NULL,
   `event_description` text,
   `event_date` date NOT NULL,
-  `event_start` timestamp NULL DEFAULT NULL,
-  `seats_count` int NOT NULL,
+  `event_start` datetime DEFAULT NULL,
+  `seats_count` int DEFAULT NULL,
   `setup_type` enum('buffet','coquetel','a_la_carte','reuniao','auditorio','pendente') NOT NULL DEFAULT 'pendente',
   `event_status` enum('confirmado','nao_confirmado') NOT NULL DEFAULT 'nao_confirmado',
   `uploads_url` varchar(250) DEFAULT NULL,
@@ -66,4 +66,4 @@ CREATE TABLE `events` (
   CONSTRAINT `fk_events_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_events_space` FOREIGN KEY (`space_id`) REFERENCES `spaces` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
   CONSTRAINT `fk_events_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

@@ -4,6 +4,9 @@ const express = require('express');
 const SpaceController = require('../controllers/spaceController');
 // Importa o controller responsável por gerenciar as ações de espaços
 
+const { authenticateToken, authorizeRole } = require('../middlewares/authMiddleware');
+// Importa os middlewares de autenticação e autorização
+
 const router = express.Router();
 // Cria uma nova instância de roteador do Express
 
@@ -13,8 +16,10 @@ router.get('/', SpaceController.getAll);
 router.get('/id/:id', SpaceController.getByID);
 // Define a rota para buscar um espaço pelo nome
 router.get('/name/:name', SpaceController.getByName);
+// Define a rota para criar um espaço (somente admin)
+router.post('/', authenticateToken, authorizeRole('admin'), SpaceController.create);
 // Define a rota para atualizar um espaço pelo ID
-router.put('/:id', SpaceController.update);
+router.put('/:id', authenticateToken, authorizeRole('admin'), SpaceController.update);
 
 
 module.exports = router;

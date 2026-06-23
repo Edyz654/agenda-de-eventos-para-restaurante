@@ -1,5 +1,0 @@
-ALTER TABLE events
-ADD COLUMN seats_count INT NOT NULL DEFAULT 1 AFTER event_start;
-
-ALTER TABLE events
-ALTER COLUMN seats_count DROP DEFAULT;

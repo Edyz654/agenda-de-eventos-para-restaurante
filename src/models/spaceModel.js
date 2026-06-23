@@ -22,6 +22,26 @@ class SpaceModel {
 
         return rows;
     }
+
+    // Cria um novo espaço
+    static async create(space) {
+        const { name } = space;
+        const [result] = await db.query(
+            'INSERT INTO spaces (name) VALUES (?)',
+            [name]
+        );
+        return result.insertId;
+    }
+
+    // Atualiza um espaço existente
+    static async update(id, space) {
+        const { name } = space;
+        const [result] = await db.query(
+            'UPDATE spaces SET name = ? WHERE id = ?',
+            [name, id]
+        );
+        return result.affectedRows;
+    }
 }
 
 module.exports = SpaceModel;

@@ -1,6 +1,6 @@
 @baseURL = http://localhost:3000
 @id_do_evento = 5
-@nome_do_evento = medi
+@nome_do_evento =
 @token_admin =
 
 ### Listar todos os eventos

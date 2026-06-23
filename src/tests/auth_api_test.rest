@@ -1,28 +1,36 @@
 @baseURL = http://localhost:3000
-@token_novo =
-@token_admin =
+@token_novo = 
+@token_admin = 
 
 ### Cadastro de novo usuário
 POST {{baseURL}}/auth/register
 Content-Type: application/json 
 
 {
-"name": "Novo Usuario",
-"email": "novo_usuario@example.com",
-"phone_number": "11999999988",
-"password": "nova_senha"
+"name": "Usuario 2",
+"email": "usuario2@example.com",
+"phone_number": "1111111111",
+"password": "usuario2"
 }
 
 
-### Login do novo usuário (pegar o token gerado abaixo)
+### Login do novo usuário (pegar o token gerado e colar na variavel token_novo)
 POST {{baseURL}}/auth/login
 Content-Type: application/json
 
 {
-"email": "novo_usuario@example.com",
-"password": "nova_senha"
+"email": "usuario2@example.com",
+"password": "usuario2"
 }
 
+### Login do admin
+POST {{baseURL}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@agenda.com",
+  "password": "senha_admin"
+}
 
 ### Tentativa de login com senha incorreta - esperado: 401
 POST {{baseURL}}/auth/login
@@ -64,7 +72,7 @@ Authorization: Bearer {{token_novo}}
 }
 
 
-### Criar evento com admin - esperado: 201 se admin puder criar
+### Criar evento - esperado: 201 se o usuario logado puder criar eventos
 POST {{baseURL}}/events
 Content-Type: application/json
 Authorization: Bearer {{token_admin}}

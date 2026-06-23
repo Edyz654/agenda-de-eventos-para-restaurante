@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Testes automatizados ainda não configurados. Use os arquivos src/tests/*.rest para testes manuais.\"",
     "start": "node server.js",
     "dev": "nodemon server.js"
   },

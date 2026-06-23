@@ -30,14 +30,20 @@ class SpaceController {
         }
     }
 
+    // Método para criar um novo espaço
+    static async create(req, res) {
+        try {
+            const id = await SpaceService.createSpace(req.body);
+            res.status(201).json({ message: 'Espaço criado com sucesso.', id });
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
     static async update(req, res) {
         try {
-            const affectedRows = await SpaceService.updateSpace(req.params.id, req.body);
-            if (affectedRows > 0) {
-                res.json({ message: 'Espaço atualizado com sucesso' }); // Retorna mensagem de sucesso
-            } else {
-                res.status(404).json({ error: 'Espaço não encontrado' }); // Retorna status 404 se o espaço não for encontrado
-            }
+            await SpaceService.updateSpace(req.params.id, req.body);
+            res.json({ message: 'Espaço atualizado com sucesso.' });
         }
         catch (error) {
             res.status(400).json({ error: error.message }); // Em caso de erro, retorna status 400

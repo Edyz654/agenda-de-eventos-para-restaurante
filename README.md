@@ -76,26 +76,4 @@ Status permitidos em `event_status`:
 confirmado, nao_confirmado
 ```
 
-A API recebe e retorna `event_date` no formato `dd/mm/yy`. No MySQL, a coluna continua sendo `DATE`, entao o backend converte automaticamente para o formato interno `YYYY-MM-DD` antes de salvar.
 
-Para confirmar ou negar um evento sem alterar o restante dos dados:
-
-```http
-PATCH /events/:id/status
-Authorization: Bearer <token_admin>
-Content-Type: application/json
-```
-
-```json
-{
-  "event_status": "confirmado"
-}
-```
-
-## Banco existente
-
-Se a tabela `events` ja existir, rode:
-
-```sql
-SOURCE src/database/alter_events_add_seats_count.sql;
-```
